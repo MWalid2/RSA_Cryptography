@@ -28,11 +28,11 @@ The experiments also evaluate the number of random candidates required to genera
 
 The experimental results confirm the theoretical error bound of Miller–Rabin:
 
-\[
+$$
 P(\text{error}) \leq 4^{-t}
-\]
+$$
 
-and show that the average number of candidates tested before finding an \(\ell\)-bit prime follows the expected theoretical behavior.
+and show that the average number of candidates tested before finding an $\ell$-bit prime follows the expected theoretical behavior.
 
 ---
 
@@ -42,25 +42,25 @@ The second part studies the **RSA broadcast attack**.
 
 When the same message `m` is encrypted for several recipients using the same small public exponent `e` but different RSA moduli:
 
-\[
+$$
 c_i \equiv m^e \pmod{N_i},
-\]
+$$
 
-an attacker can use the **Chinese Remainder Theorem (CRT)** to reconstruct the value of \(m^e\) modulo the product of the RSA moduli.
+an attacker can use the **Chinese Remainder Theorem (CRT)** to reconstruct the value of $m^e$ modulo the product of the RSA moduli.
 
 If:
 
-\[
+$$
 m^e < \prod_{i=1}^{r}N_i,
-\]
+$$
 
-the reconstructed value is exactly \(m^e\), meaning that the attacker can recover the plaintext simply by computing its integer \(e\)-th root.
+the reconstructed value is exactly $m^e$, meaning that the attacker can recover the plaintext simply by computing its integer $e$-th root.
 
 Under the assumptions studied in the report, the attack becomes deterministic when:
 
-\[
+$$
 r \geq e.
-\]
+$$
 
 Thus, RSA can be compromised without knowledge of any private key when textbook RSA is used to broadcast the same plaintext with a common public exponent.
 
@@ -70,9 +70,9 @@ Thus, RSA can be compromised without knowledge of any private key when textbook 
 
 Since the classical attack ultimately requires computing:
 
-\[
+$$
 m=\sqrt[e]{X},
-\]
+$$
 
 the project compares two algorithms for extracting large integer roots:
 
@@ -83,7 +83,7 @@ the project compares two algorithms for extracting large integer roots:
 
 Newton's method consistently outperforms binary search, particularly for larger exponents.
 
-For exponents between approximately 20 and 100, the experiments report speed improvements on the order of **10× to 100×**. This is explained by Newton's much faster convergence, requiring approximately \(O(\log\log X)\) iterations compared with \(O(\log X)\) for binary search.
+For exponents between approximately 20 and 100, the experiments report speed improvements on the order of **10× to 100×**. This is explained by Newton's much faster convergence, requiring approximately $O(\log\log X)$ iterations compared with $O(\log X)$ for binary search.
 
 ---
 
@@ -91,21 +91,21 @@ For exponents between approximately 20 and 100, the experiments report speed imp
 
 The study then considers a more sophisticated scenario where the plaintext is not directly encrypted, but transformed using a linear padding scheme:
 
-\[
+$$
 m_i' = a_i m+b_i.
-\]
+$$
 
 The resulting ciphertexts satisfy:
 
-\[
+$$
 c_i \equiv (a_i m+b_i)^e \pmod{N_i}.
-\]
+$$
 
 Using CRT, these congruences can be combined into a single polynomial equation:
 
-\[
+$$
 P(m)\equiv0\pmod{N_{\text{total}}}.
-\]
+$$
 
 The problem therefore becomes one of finding a **small root of a polynomial modulo a composite integer**.
 
@@ -125,9 +125,9 @@ The method consists of:
 
 The theoretical success condition is related to the size of the unknown message:
 
-\[
+$$
 |m| < N_{\text{total}}^{1/e-\epsilon}.
-\]
+$$
 
 ---
 
@@ -135,18 +135,18 @@ The theoretical success condition is related to the size of the unknown message:
 
 The experiments reveal an approximately linear relationship between the **critical number of recipients** and the RSA public exponent:
 
-\[
+$$
 \beta(e,k)\approx a(k)e+b(k).
-\]
+$$
 
 The experimentally obtained relationships were:
 
 | `k` | Empirical threshold |
 |---:|---:|
-| 2 | \(\beta_2 \approx 2.000e\) |
-| 3 | \(\beta_3 \approx 1.475e+0.450\) |
-| 4 | \(\beta_4 \approx 1.330e+0.341\) |
-| 5 | \(\beta_5 \approx 1.242e+0.382\) |
+| 2 | $\beta_2 \approx 2.000e$ |
+| 3 | $\beta_3 \approx 1.475e+0.450$ |
+| 4 | $\beta_4 \approx 1.330e+0.341$ |
+| 5 | $\beta_5 \approx 1.242e+0.382$ |
 
 Increasing `k` reduces the number of recipients required for the generalized attack, but also significantly increases the computational cost of the **LLL lattice reduction**. This creates a trade-off between theoretical attack efficiency and practical computational complexity.
 
